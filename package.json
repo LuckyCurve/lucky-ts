@@ -1,0 +1,26 @@
+{
+	"name": "lucky-ts",
+	"version": "0.0.1",
+	"description": "A CLI tool with SSH command support.",
+	"type": "module",
+	"bin": {
+		"lucky-ts": "./dist/main.js"
+	},
+	"files": [
+		"dist"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/LuckyCurve/lucky-ts.git"
+	},
+	"license": "MIT",
+	"scripts": {
+		"build": "tsc"
+	},
+	"dependencies": {
+		"commander": "^14.0.0"
+	},
+	"devDependencies": {
+		"@types/node": "^24.2.0"
+	}
+}
