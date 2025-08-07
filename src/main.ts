@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 
-import { spawn } from "child_process";
 import { Command } from "commander";
+import ssh from "./service/ssh.js";
 
 const program: Command = new Command();
-
-const DEFAULT_WEBSITE = "luckycurve.asia";
 
 program
 	.name("lucky-ts")
@@ -15,16 +13,5 @@ program
 program
 	.command("ssh <target>")
 	.description("Connect to a remote server via SSH")
-	.action((target) => {
-		const websiteSuffix = process.env["LUCKY_WEBSITE"] || DEFAULT_WEBSITE;
-		console.log(`Connecting to ${target}.${websiteSuffix} via SSH...`);
-		const ssh = spawn("ssh", [`root@${target}.${websiteSuffix}`], {
-			stdio: "inherit",
-		});
-		ssh.on("close", (code) => {
-			if (code !== 0) {
-				console.log(`ssh process exited with code ${code}`);
-			}
-		});
-	});
+	.action(ssh);
 program.parse();
