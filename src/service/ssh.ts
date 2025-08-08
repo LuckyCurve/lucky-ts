@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 const DEFAULT_WEBSITE = "luckycurve.asia";
 
-function ssh(target: string): void {
+export function ssh(target: string): void {
 	const websiteSuffix = process.env["LUCKY_WEBSITE"] || DEFAULT_WEBSITE;
 	console.log(`Connecting to ${target}.${websiteSuffix} via SSH...`);
 	const ssh = spawn("ssh", [`root@${target}.${websiteSuffix}`], {
@@ -13,5 +13,3 @@ function ssh(target: string): void {
 		}
 	});
 }
-
-export default ssh;
