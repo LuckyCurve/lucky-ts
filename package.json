@@ -17,8 +17,7 @@
 	"scripts": {
 		"build": "tsc",
 		"dev": "yarn build && node dist/main.js",
-		"lint": "eslint src/**/*.ts --fix",
-		"format": "prettier --write src/**/*.ts"
+		"lint": "eslint src/**/*.ts --fix"
 	},
 	"dependencies": {
 		"commander": "^14.0.0"
