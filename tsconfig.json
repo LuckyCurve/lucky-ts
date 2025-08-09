@@ -1,44 +1,40 @@
 {
-	// Visit https://aka.ms/tsconfig to read more about this file
+	// 访问 https://aka.ms/tsconfig 了解更多关于此文件的信息
 	"compilerOptions": {
-		// File Layout
-		"rootDir": "./src",
-		"outDir": "./dist",
+		// 文件布局
+		"rootDir": "./src", // 指定 TypeScript 源代码的根目录
+		"outDir": "./dist", // 指定编译后 JavaScript 代码的输出目录
 
-		// Environment Settings
-		// See also https://aka.ms/tsconfig/module
-		"module": "nodenext",
-		"target": "esnext",
-		"types": ["node"],
-		// For nodejs:
-		// "lib": ["esnext"],
-		// "types": ["node"],
-		// and npm install -D @types/node
+		// 环境设置
+		// 另请参阅 https://aka.ms/tsconfig/module
+		"module": "nodenext", // 指定生成的模块代码类型，nodenext 适用于 Node.js 最新模块系统
+		"target": "esnext", // 指定 ECMAScript 目标版本
+		"types": ["node"], // 指定要包含的类型定义文件
 
-		// Other Outputs
-		"sourceMap": true,
-		"declaration": true,
-		"declarationMap": true,
+		// 其他输出
+		"sourceMap": true, // 生成相应的 .map 文件
+		"declaration": true, // 生成相应的 .d.ts 文件
+		"declarationMap": true, // 为每个 .d.ts 文件生成一个 sourcemap
 
-		// Stricter Typechecking Options
-		"noUncheckedIndexedAccess": true,
-		"exactOptionalPropertyTypes": true,
+		// 更严格的类型检查选项
+		"noUncheckedIndexedAccess": true, // 对索引签名访问进行更严格的检查
+		"exactOptionalPropertyTypes": true, // 确保可选属性类型完全匹配
 
-		// Style Options
-		"noImplicitReturns": true,
-		"noImplicitOverride": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true,
-		"noPropertyAccessFromIndexSignature": true,
+		// 代码风格选项
+		"noImplicitReturns": true, // 报告函数中并非所有代码路径都有返回值的错误
+		"noImplicitOverride": true, // 确保派生类中重写的方法包含 override 修饰符
+		"noUnusedLocals": true, // 报告未使用的局部变量的错误
+		"noUnusedParameters": true, // 报告未使用的函数参数的错误
+		"noFallthroughCasesInSwitch": true, // 报告 switch 语句中贯穿的 case 错误
+		"noPropertyAccessFromIndexSignature": true, // 需要使用索引签名语法访问声明的索引签名
 
-		// Recommended Options
-		"strict": true,
-		"jsx": "react-jsx",
-		"verbatimModuleSyntax": true,
-		"isolatedModules": true,
-		"noUncheckedSideEffectImports": true,
-		"moduleDetection": "force",
-		"skipLibCheck": true
+		// 推荐选项
+		"strict": true, // 启用所有严格的类型检查选项
+		"jsx": "react-jsx", // 指定 JSX 代码生成方式
+		"verbatimModuleSyntax": true, // 保留模块导入/导出的原始语法
+		"isolatedModules": true, // 确保每个文件都可以安全地转译，而无需依赖其他文件
+		"noUncheckedSideEffectImports": true, // 确保只导入具有副作用的模块
+		"moduleDetection": "force", // 强制模块检测策略
+		"skipLibCheck": true // 跳过声明文件的类型检查
 	}
 }

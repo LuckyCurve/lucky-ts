@@ -38,15 +38,15 @@ To set up the project for development:
 2.  Install dependencies:
     ```bash
     cd lucky-ts
-    npm install
+    yarn install
     ```
-3.  Build the project:
+3.  Run the project in development mode:
 
     ```bash
-    npm run build
+    yarn dev
     ```
 
-4.  Build the project:
+4.  Publish the project:
     ```bash
     npm publish --registry https://registry.npmjs.org
     ```
