@@ -1,36 +1,36 @@
 {
-	"name": "lucky-ts",
-	"version": "0.0.3",
-	"description": "A CLI tool with SSH command support.",
-	"type": "module",
-	"bin": {
-		"lucky-ts": "./dist/main.js"
-	},
-	"files": [
-		"dist"
-	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/LuckyCurve/lucky-ts.git"
-	},
-	"license": "MIT",
-	"scripts": {
-		"build": "tsc",
-		"dev": "yarn build && node dist/main.js",
-		"lint": "eslint src/**/*.ts --fix"
-	},
-	"dependencies": {
-		"commander": "^14.0.0"
-	},
-	"devDependencies": {
-		"@types/node": "^24.2.0",
-		"@typescript-eslint/eslint-plugin": "^8.39.0",
-		"@typescript-eslint/parser": "^8.39.0",
-		"eslint": "^9.33.0",
-		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-prettier": "^5.5.4",
-		"prettier": "^3.6.2",
-		"typescript": "^5.9.2",
-		"typescript-eslint": "^8.39.0"
-	}
+    "name": "lucky-ts",
+    "version": "0.0.3",
+    "description": "A CLI tool with SSH command support.",
+    "type": "module",
+    "bin": {
+        "lucky-ts": "./dist/main.js"
+    },
+    "files": [
+        "dist"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LuckyCurve/lucky-ts.git"
+    },
+    "license": "MIT",
+    "scripts": {
+        "build": "tsc",
+        "dev": "yarn build && node dist/main.js",
+        "lint": "eslint src/**/*.ts --fix"
+    },
+    "dependencies": {
+        "commander": "^14.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^24.2.0",
+        "@typescript-eslint/eslint-plugin": "^8.39.0",
+        "@typescript-eslint/parser": "^8.39.0",
+        "eslint": "^9.33.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-prettier": "^5.5.4",
+        "prettier": "^3.6.2",
+        "typescript": "^5.9.2",
+        "typescript-eslint": "^8.39.0"
+    }
 }
