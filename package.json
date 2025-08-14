@@ -16,7 +16,7 @@
     "license": "MIT",
     "scripts": {
         "build": "tsc",
-        "dev": "yarn build && node dist/main.js",
+        "dev": "npm run build && node dist/main.js",
         "lint": "eslint src/**/*.ts --fix"
     },
     "dependencies": {
