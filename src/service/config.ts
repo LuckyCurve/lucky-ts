@@ -7,7 +7,16 @@ import os from "os";
  * @interface
  */
 interface IConfig {
-    [key: string]: string;
+    ssh: Record<string, string>;
+
+    instance: Record<string, InstanceElement>;
+}
+
+export class InstanceElement {
+    constructor(
+        public region: string,
+        public instanceId: string,
+    ) {}
 }
 
 // 定义配置文件的目录和路径
@@ -31,7 +40,7 @@ const ensureConfigDirExists = (): void => {
 const loadConfig = (): IConfig => {
     ensureConfigDirExists();
     if (!existsSync(CONFIG_FILE)) {
-        return {};
+        return { ssh: {}, instance: {} };
     }
     const data = readFileSync(CONFIG_FILE, "utf-8");
     return JSON.parse(data) as IConfig;
@@ -52,17 +61,17 @@ const saveConfig = (config: IConfig): void => {
  * @param {string} alias - 连接的别名
  * @param {string} connectionString - 连接字符串 (例如: user@host)
  */
-export const addConnection = (
+export const addSshConnection = (
     alias: string,
     connectionString: string,
 ): void => {
     const config = loadConfig();
-    if (config[alias]) {
+    if (config.ssh[alias]) {
         console.warn(
-            `别名 '${alias}' 已存在，并指向 '${config[alias]}'。将被覆盖。`,
+            `别名 '${alias}' 已存在，并指向 '${config.ssh[alias]}'。将被覆盖。`,
         );
     }
-    config[alias] = connectionString;
+    config.ssh[alias] = connectionString;
     saveConfig(config);
     console.log(`成功添加别名 '${alias}' -> '${connectionString}'`);
 };
@@ -70,15 +79,15 @@ export const addConnection = (
 /**
  * 列出所有已保存的 SSH 连接配置
  */
-export const listConnections = (): void => {
+export const listSshConnections = (): void => {
     const config = loadConfig();
     if (Object.keys(config).length === 0) {
         console.log("没有找到任何已保存的连接配置。");
         return;
     }
     console.log("已保存的 SSH 连接:");
-    for (const alias in config) {
-        console.log(`  - ${alias}: ${config[alias]}`);
+    for (const alias in config.ssh) {
+        console.log(`  - ${alias}: ${config.ssh[alias]}`);
     }
 };
 
@@ -86,13 +95,13 @@ export const listConnections = (): void => {
  * 删除一个指定的 SSH 连接配置
  * @param {string} alias - 要删除的连接别名
  */
-export const removeConnection = (alias: string): void => {
+export const removeSshConnection = (alias: string): void => {
     const config = loadConfig();
-    if (!config[alias]) {
+    if (!config.ssh[alias]) {
         console.error(`错误: 别名 '${alias}' 不存在。`);
         return;
     }
-    delete config[alias];
+    delete config.ssh[alias];
     saveConfig(config);
     console.log(`成功删除别名 '${alias}'。`);
 };
@@ -102,7 +111,61 @@ export const removeConnection = (alias: string): void => {
  * @param {string} alias - 要查找的别名
  * @returns {string | undefined} 如果找到则返回连接字符串，否则返回 undefined
  */
-export const getConnection = (alias: string): string | undefined => {
+export const getSshConnection = (alias: string): string | undefined => {
     const config = loadConfig();
-    return config[alias];
+    return config.ssh[alias];
+};
+
+export const addInstanceConnection = (
+    name: string,
+    region: string,
+    instanceId: string,
+): void => {
+    const config = loadConfig();
+    if (config.instance[name]) {
+        console.warn(
+            `别名 '${name}' 已存在，并指向 '${config.instance[name]}'。将被覆盖。`,
+        );
+    }
+    config.instance[name] = new InstanceElement(region, instanceId);
+    saveConfig(config);
+    console.log(`成功添加别名 '${name}' -> '${region}:${instanceId}'`);
+};
+
+export const listInstanceConnections = (): void => {
+    const config = loadConfig();
+    if (Object.keys(config).length === 0) {
+        console.log("没有找到任何已保存的实例配置。");
+        return;
+    }
+    console.log("已保存的实例连接:");
+
+    for (const [name, instance] of Object.entries(config.instance)) {
+        console.log(`  - ${name}: ${instance.region}:${instance.instanceId}`);
+    }
+};
+
+export const removeInstanceConnection = (name: string): void => {
+    const config = loadConfig();
+    if (!config.instance[name]) {
+        console.error(`错误: 别名 '${name}' 不存在。`);
+        return;
+    }
+    delete config.instance[name];
+    saveConfig(config);
+    console.log(`成功删除别名 '${name}'。`);
+};
+
+export const getInstances = (alias: string): Array<InstanceElement> => {
+    const config = loadConfig();
+
+    if (alias === "all") {
+        return Object.values(config.instance);
+    }
+
+    if (config.instance[alias] === undefined) {
+        return [];
+    }
+
+    return [config.instance[alias]];
 };
