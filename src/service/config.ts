@@ -83,8 +83,8 @@ export const addSshConnection = (
  */
 export const listSshConnections = (): void => {
   const config = loadConfig();
-  if (Object.keys(config).length === 0) {
-    console.log("没有找到任何已保存的连接配置。");
+  if (Object.keys(config.ssh).length === 0) {
+    console.log("没有找到任何已保存的 SSH 连接配置。");
     return;
   }
   console.log("已保存的 SSH 连接:");
@@ -136,7 +136,7 @@ export const addInstanceConnection = (
 
 export const listInstanceConnections = (): void => {
   const config = loadConfig();
-  if (Object.keys(config).length === 0) {
+  if (Object.keys(config.instance).length === 0) {
     console.log("没有找到任何已保存的实例配置。");
     return;
   }
