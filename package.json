@@ -1,6 +1,6 @@
 {
     "name": "lucky-ts",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "A CLI tool with SSH command support.",
     "type": "module",
     "bin": {
