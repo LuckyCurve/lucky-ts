@@ -49,7 +49,9 @@ function lighthouseCommand(program: Command, configCommand: Command) {
       lighthouseReboot(instances);
     });
 
-  configCommand = configCommand.command("instance");
+  configCommand = configCommand
+    .command("instance")
+    .description("管理 Lighthouse 实例配置");
 
   configCommand
     .command("add <name> <region> <instanceId>")
@@ -78,7 +80,7 @@ function sshCommand(program: Command, configCommand: Command) {
       ssh(connectionString);
     });
 
-  configCommand = configCommand.command("ssh");
+  configCommand = configCommand.command("ssh").description("管理 SSH 连接配置");
 
   configCommand
     .command("add <alias> <connectionString>")
