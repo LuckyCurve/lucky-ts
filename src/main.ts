@@ -14,6 +14,7 @@ import {
 } from "./service/config.js";
 import pkg from "../package.json" with { type: "json" };
 import { lighthousePriceSearch, lighthouseReboot } from "./service/cloud.js";
+import { peCommand } from "./service/pe.js";
 
 const program: Command = new Command()
   .name("lucky-ts")
@@ -25,9 +26,17 @@ const configCommand = program
   .description("管理一系列配置信息");
 
 sshCommand(program, configCommand);
+financeCommand(program);
 lighthouseCommand(program, configCommand);
 
 program.parse();
+
+function financeCommand(program: Command) {
+  program
+    .command("pe")
+    .description("基于十年期国债收益率参考的 PE 值")
+    .action(peCommand);
+}
 
 function lighthouseCommand(program: Command, configCommand: Command) {
   // 询价
