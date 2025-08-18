@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 1. Format code
+npm run format
+
+# 2. Add formatted files to the commit
+# Note: This is a simple approach. For more complex scenarios,
+# lint-staged is recommended as it only adds the files that were staged.
+git add src/**/*.ts
+
+# 3. Lint the code after formatting. If linting fails, the commit will be aborted.
+npm run lint
