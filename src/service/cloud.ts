@@ -2,27 +2,36 @@ import { Client } from "tencentcloud-sdk-nodejs-lighthouse/tencentcloud/services
 import { loadConfig, saveConfig, type InstanceElement } from "./config.js";
 import { send } from "./notification.js";
 
-// 检查凭证是否已设置
-const secretId = process.env["TENCENT_CLOUD_SECRET_ID"];
-const secretKey = process.env["TENCENT_CLOUD_SECRET_KEY"];
+// 延迟初始化的客户端
+let client: Client | null = null;
 
-if (!secretId || !secretKey) {
-  console.error("错误: 未设置腾讯云 API 凭证。");
-  console.error(
-    "请确保环境变量 TENCENT_CLOUD_SECRET_ID 和 TENCENT_CLOUD_SECRET_KEY 已正确设置。",
-  );
-  process.exit(1);
+function getClient(): Client {
+  if (client) {
+    return client;
+  }
+
+  const secretId = process.env["TENCENT_CLOUD_SECRET_ID"];
+  const secretKey = process.env["TENCENT_CLOUD_SECRET_KEY"];
+
+  if (!secretId || !secretKey) {
+    throw new Error(
+      "未设置腾讯云 API 凭证。请确保环境变量 TENCENT_CLOUD_SECRET_ID 和 TENCENT_CLOUD_SECRET_KEY 已正确设置。",
+    );
+  }
+
+  client = new Client({
+    credential: {
+      secretId: secretId,
+      secretKey: secretKey,
+    },
+  });
+
+  return client;
 }
-
-const client = new Client({
-  credential: {
-    secretId: secretId,
-    secretKey: secretKey,
-  },
-});
 
 export async function lighthousePriceSearch() {
   while (true) {
+    const client = getClient();
     client.region = "ap-hongkong";
 
     const response = await client.DescribeBundles({
@@ -65,6 +74,7 @@ export async function lighthousePriceSearch() {
 
 export async function lighthouseReboot(instances: Array<InstanceElement>) {
   for (const instance of instances) {
+    const client = getClient();
     client.region = instance.region;
 
     const response = await client.RebootInstances({
